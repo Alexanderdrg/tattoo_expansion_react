@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import logo from './logo.svg';
 import './App.css';
 import Product from './components/Product';

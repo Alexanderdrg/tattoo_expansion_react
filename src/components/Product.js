@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import '../assets/styles/Product.css';
 
 export default function Product() {
     const [data, setData] = useState(null);
@@ -30,26 +31,26 @@ export default function Product() {
     }, []);
 
     return <section className="py-5">
-        <div className="px-4 px-lg-5 mt-5">
-            <Row className="gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div className="container px-4 px-lg-5 mt-5">
+            <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {data &&
                     data.map(({ id, name, price, images }) => (
-                        <Col className='mb-5' key={id}>
-                            <Card style={{ width: '18rem', height: '25rem' }}>
-                                <Card.Img src={images} style={{ width: '10rem' }} className="mx-auto mt-4"></Card.Img>
-                                <Card.Body>
-                                    <Card.Title className="text-center">{name}</Card.Title>
-                                    <Card.Text className="text-center">{price}</Card.Text>
-                                </Card.Body>
-                                <Card.Footer className="p-4 pt-0 border-top-0 bg-transparent">
-                                    <Card.Text className="text-center">
-                                        <Button variant="outline-primary">Add to cart</Button>
-                                    </Card.Text>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
+                        <div className="col mb-5">
+                            <div className="card h-100">
+                                <img className="card-img-top" src={images} alt="..." />
+                                <div className="card-body p-4">
+                                    <div className="text-center">
+                                        <h5 className="fw-bolder">{name}</h5>
+                                        {price}
+                                    </div>
+                                </div>
+                                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">Add to Cart</a></div>
+                                </div>
+                            </div>
+                        </div>
                     ))}
-            </Row>
+            </div>
         </div>
     </section>
 
