@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
-export default function Products() {
+export default function SellerProducts() {
     const [data, setData] = useState([]);
     const [filter, setFilter] = useState(data);
     const [loading, setLoading] = useState(false);
@@ -46,7 +46,7 @@ export default function Products() {
     };
 
     const filterProduct = (cat) => {
-        const updatedList = data.filter((x)=>x.category === cat);
+        const updatedList = data.filter((x) => x.category === cat);
         setFilter(updatedList);
     }
 
@@ -71,7 +71,7 @@ export default function Products() {
                                     <div className="card-body">
                                         <h5 className="card-title mb-0">{product.name}</h5>
                                         <p className="card-text lead fw-bold ">${product.metadata.price}</p>
-                                        <Link to={`/products/${product.id}`} className="btn btn-outline-dark">Add to Cart</Link>
+                                        <Link to={`/products/sellers/update/${product.id}`} className="btn btn-outline-dark">View details</Link>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@ export default function Products() {
             <div className='container my-5 py-5 mt-0'>
                 <div className='row'>
                     <div className='col-12 mb-5'>
-                        <h1 className='display-6 fw-bolder text-center'>Latest Products</h1>
+                        <h1 className='display-6 fw-bolder text-center'>Your Products</h1>
                         <hr />
                     </div>
                 </div>

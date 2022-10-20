@@ -22,10 +22,10 @@ export default function Navbar() {
                             </li>
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown
+                                    Profile
                                 </Link>
                                 <ul className="dropdown-menu">
-                                    <li><Link className="dropdown-item" to="#">Action</Link></li>
+                                    <li><Link className="dropdown-item" to="/products/sellers">Products Management</Link></li>
                                     <li><Link className="dropdown-item" to="#">Another action</Link></li>
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><Link className="dropdown-item" to="#">Something else here</Link></li>
@@ -39,7 +39,7 @@ export default function Navbar() {
                             <Link className="btn btn-outline-dark ms-2">
                                 <i className="fa fa-user-plus me-1"></i>Register
                             </Link>
-                            <Link className="btn btn-outline-dark ms-2">
+                            <Link to="/cart" className="btn btn-outline-dark ms-2">
                                 <i className="fa fa-shopping-cart me-1"></i>Cart (0)
                             </Link>
                         </div>

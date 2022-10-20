@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Products from './components/Products';
 import Product from './components/Product';
+import SellerProducts from './components/SellerProducts';
+import UpdateProduct from './components/UpdateProduct';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/products/:id" element={<Product />} />
+        <Route exact path="/products/sellers" element={<SellerProducts />} />
+        <Route exact path="/products/sellers/update/:id" element={<UpdateProduct />} />
       </Routes>
     </>
   );
