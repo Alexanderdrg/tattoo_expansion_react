@@ -54,9 +54,9 @@ export default function SellerProducts() {
         return (
             <>
                 <div className='buttons d-flex justify-content-center mb-5 pb-5'>
-                    <button className='btn btn-outline-dark'>
+                    <Link to='add/' className='btn btn-outline-dark'>
                         <i className="fa fa-plus me-1"></i>Add product
-                    </button>
+                    </Link>
                     <button className='btn btn-outline-dark ms-2' onClick={() => setFilter(data)}>
                         All
                     </button>
