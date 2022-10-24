@@ -7,15 +7,16 @@ export default function AddProduct() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [images, setImages] = useState("");
+    const [humanPrice, setHumanPrice] = useState("");
     const [price, setPrice] = useState("");
-    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const res = await fetch("http://127.0.0.1:8000/api/sellers/list/", {
                 method: 'POST',
-                headers:{'content-type': 'application/json'},
+                headers: { 'content-type': 'application/json' },
                 body: JSON.stringify({
                     name: name,
                     description: description,
@@ -30,6 +31,7 @@ export default function AddProduct() {
                 setImages("");
                 setPrice("");
                 setMessage("Product created successfully");
+                alert('Your Product has been created')
             } else {
                 setMessage("Some error occured");
             }
@@ -37,7 +39,7 @@ export default function AddProduct() {
             console.log(err);
         }
     };
-      
+
     return (
         <div>
             <div className='container my-5 py-5 mt-0'>
@@ -61,10 +63,22 @@ export default function AddProduct() {
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                             <label className='form-label lead mt-3'>Price</label>
-                            <input type="number" min="0.00" step="0.01" className='form-control' placeholder='Required'
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
+                            <input type="text" className='form-control' placeholder='Required'
+                                value={humanPrice}
+                                onFocus={(e) =>
+                                    setHumanPrice(price)
+                                }
+                                onChange={(e) => {
+                                    setPrice(e.target.value)
+                                    setHumanPrice(e.target.value)
+                                }
+
+                                }
+                                onBlur={(e) =>
+                                    setHumanPrice(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(e.target.value))
+                                }
                             />
+
                             <label className='form-label lead mt-3'>Image</label>
                             <input type="text" className='form-control'
                                 value={images}
