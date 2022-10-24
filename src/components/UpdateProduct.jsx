@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
-
+import axios from 'axios';
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 export default function UpdateProduct() {
-
-  const navigate = useNavigate();
   const { id } = useParams();
-  const [product, setProduct] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  console.log(id);
+  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState({
+    name: '',
+    description: '',
+    images: ''
+  })
 
   useEffect(() => {
     const getProduct = async () => {
@@ -23,59 +23,69 @@ export default function UpdateProduct() {
     getProduct();
   }, []);
 
-
-  const Loading = () => {
-    return (
-      <>
-        <div className="col-md-6">
-          <Skeleton height={400}></Skeleton>
-        </div>
-      </>
-    )
+  const onChangeName = e => {
+    setProduct({
+      name: e.target.value,
+      description: product.description,
+      images: product.images
+    })
   }
 
-  const ShowProduct = () => {
-    return (
-      <>
-        <div className='col-md-4'>
-          <img src={product.images} alt={product.name} height="400px" width="400px" />
-        </div>
-        <div className='col-md-6'>
-          {/* <h4 className='text-uppercase text-black-50'>
-                {product.category}
-            </h4> */}
-          <p className='lead'>
-            Name
-          </p>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" defaultValue={product.name} aria-label="Username" aria-describedby="basic-addon1" />
-          </div>
-          <p className='lead mt-4'>Description</p>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" defaultValue={product.description} aria-label="Username" aria-describedby="basic-addon1" />
-          </div>
-          <a href={product.payment_link} target="_blank" rel="noreferrer" className='btn btn-outline-dark px-3 py-2'>
-            Save changes
-          </a>
-        </div>
-      </>
-    )
+  const onChangeDescription = e => {
+    setProduct({
+      name: product.name,
+      description: e.target.value,
+      images: product.images
+    })
   }
+
+  const onChangeImage = e => {
+    setProduct({
+      name: product.name,
+      description: product.description,
+      images: [
+        e.target.value
+      ]
+    })
+  }
+
+  const submitHandler = (e) => {
+    alert(product.name, product.description, product.images)
+    e.preventDefault();
+    const response = axios.put(`http://127.0.0.1:8000/api/sellers/${id}/`, {
+      name: product.name,
+      description: product.description,
+      images: product.images
+    })
+    console.log(response.json())
+  }
+
   return (
-    <div>
-      <div className='container my-5 py-5 mt-0 mb-0'>
-        <div className='row'>
-          <div className='col-12 mb-0'>
-            <h1 className='display-6 fw-bolder text-center'>Update this product</h1>
-            <hr />
-          </div>
+    <div className='container my-5'>
+      <div className="row py-4">
+        <div className='col-md-4'>
+          <img src={product.images} alt={product.images} height="400px" width="400px" />
         </div>
-      </div>
-      <div className='container py-2'>
-        <div className="row py-4">
-          {loading ? <Loading /> : <ShowProduct />}
-        </div>
+        <form className='col-md-6 mb-3'>
+          <label className='form-label lead'>Name</label>
+          <input type="text" className='form-control'
+            onChange={onChangeName}
+            value={product.name}
+          />
+          <label className='form-label lead mt-3'>Description</label>
+          <input type="text" className='form-control'
+            onChange={onChangeDescription}
+            value={product.description}
+          />
+          <label className='form-label lead mt-3'>Image</label>
+          <input type="text" className='form-control'
+            onChange={onChangeImage}
+            value={product.images}
+          />
+          <button type="submit" className="btn btn-outline-dark py-2 my-3" onClick={submitHandler}>Save Changes</button>
+        </form>
       </div>
     </div>
+
   )
 }

@@ -42,9 +42,6 @@ export default function Product() {
                     <img src={product.images} alt={product.name} height="400px" width="400px" />
                 </div>
                 <div className='col-md-6'>
-                    {/* <h4 className='text-uppercase text-black-50'>
-                    {product.category}
-                </h4> */}
                     <h1 className='display-5'>
                         {product.name}
                     </h1>

@@ -54,18 +54,21 @@ export default function SellerProducts() {
         return (
             <>
                 <div className='buttons d-flex justify-content-center mb-5 pb-5'>
-                    <button className='btn btn-outline-dark' onClick={() => setFilter(data)}>
+                    <button className='btn btn-outline-dark'>
+                        <i className="fa fa-plus me-1"></i>Add product
+                    </button>
+                    <button className='btn btn-outline-dark ms-2' onClick={() => setFilter(data)}>
                         All
                     </button>
                     <button className='btn btn-outline-dark ms-2' onClick={() => filterProduct('another category')}>
                         Not available
                     </button>
                 </div>
-                {filter.map((product,) => {
+                {filter.map((product) => {
                     return (
                         <>
-                            <div className='col-md-3 mb-4'>
-                                <div className="card h-100 text-center p-4" key={product.id}>
+                            <div className='col-md-3 mb-4' key={product.id}>
+                                <div className="card h-100 text-center p-4">
                                     <img src={product.images} className="card-img-top" alt={product.name}
                                         height="250px" />
                                     <div className="card-body">
