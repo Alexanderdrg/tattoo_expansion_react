@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 
 export default function UpdateProduct() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState({
     name: '',
     description: '',
@@ -14,10 +13,8 @@ export default function UpdateProduct() {
 
   useEffect(() => {
     const getProduct = async () => {
-      setLoading(true);
       const response = await fetch(`http://127.0.0.1:8000/api/products/${id}/`);
       setProduct(await response.json());
-      setLoading(false);
     }
 
     getProduct();
@@ -50,7 +47,7 @@ export default function UpdateProduct() {
   }
 
   const submitHandler = (e) => {
-    alert(product.name, product.description, product.images)
+    alert('Your product has been updated')
     e.preventDefault();
     const response = axios.put(`http://127.0.0.1:8000/api/sellers/${id}/`, {
       name: product.name,
