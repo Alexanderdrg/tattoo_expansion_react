@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 export default function UpdateProduct() {
   const { id } = useParams();
@@ -60,7 +60,7 @@ export default function UpdateProduct() {
   return (
     <div className='container my-5'>
       <div className="row py-4">
-        <div className='col-md-4'>
+        <div className='col-md-5'>
           <img src={product.images} alt={product.images} height="400px" width="400px" />
         </div>
         <form className='col-md-6 mb-3'>
@@ -70,7 +70,7 @@ export default function UpdateProduct() {
             value={product.name}
           />
           <label className='form-label lead mt-3'>Description</label>
-          <input type="text" className='form-control'
+          <textarea type="text" className='form-control' rows="3"
             onChange={onChangeDescription}
             value={product.description}
           />
@@ -79,7 +79,8 @@ export default function UpdateProduct() {
             onChange={onChangeImage}
             value={product.images}
           />
-          <button type="submit" className="btn btn-outline-dark py-2 my-3" onClick={submitHandler}>Save Changes</button>
+          <Link to="/products/sellers" type="button" className="btn btn-outline-dark py-2 my-3">Discard Changes</Link>
+          <button type="submit" id='liveAlertBtn' className="btn btn-outline-dark py-2 my-3 ms-2" onClick={submitHandler}>Save Changes</button>
         </form>
       </div>
     </div>

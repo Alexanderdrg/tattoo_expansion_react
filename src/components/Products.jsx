@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { Link } from 'react-router-dom';
 
 export default function Products() {
     const [data, setData] = useState([]);
     const [filter, setFilter] = useState(data);
     const [loading, setLoading] = useState(false);
+    const [loaded, setLoaded] = useState(8);
     let componentMounted = true;
 
     useEffect(() => {
         const getProducts = async () => {
             setLoading(true);
-            const response = await fetch("http://127.0.0.1:8000/api/products/list/");
+            const response = await fetch("http://127.0.0.1:8000/api/products/list/?limit=4");
             if (componentMounted) {
                 setData(await response.clone().json());
                 setFilter(await response.json());
                 setLoading(false);
-                console.log(filter);
             }
             return () => {
                 componentMounted = false;
@@ -24,30 +23,43 @@ export default function Products() {
             }
         }
         getProducts();
+
     }, [])
 
     const Loading = () => {
         return (
             <>
-                <div className="col-md-3">
-                    <Skeleton height={350}></Skeleton>
-                </div>
-                <div className="col-md-3">
-                    <Skeleton height={350}></Skeleton>
-                </div>
-                <div className="col-md-3">
-                    <Skeleton height={350}></Skeleton>
-                </div>
-                <div className="col-md-3">
-                    <Skeleton height={350}></Skeleton>
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
                 </div>
             </>
         );
     };
 
     const filterProduct = (cat) => {
-        const updatedList = data.filter((x)=>x.category === cat);
+        const updatedList = data.filter((x) => x.category === cat);
         setFilter(updatedList);
+    }
+
+    const handleMoreProducts = async () => {
+        setLoaded(loaded + 4)
+        
+        const getProducts = async () => {
+            setLoading(true);
+            const response = await fetch("http://127.0.0.1:8000/api/products/list/?limit="+loaded);
+            if (componentMounted) {
+                setData(await response.clone().json());
+                setFilter(await response.json());
+                setLoading(false);
+            }
+            return () => {
+                componentMounted = false;
+
+            }
+        }
+        getProducts();
     }
 
     const ShowProducts = () => {
@@ -63,19 +75,17 @@ export default function Products() {
                 </div>
                 {filter.map((product) => {
                     return (
-                        <>
-                            <div className='col-md-3 mb-4' key={product.id}>
-                                <div className="card h-100 text-center p-4">
-                                    <img src={product.images} className="card-img-top" alt={product.name}
-                                        height="250px" />
-                                    <div className="card-body">
-                                        <h5 className="card-title mb-0">{product.name}</h5>
-                                        <p className="card-text lead fw-bold ">${product.metadata.price}</p>
-                                        <Link to={`/products/${product.id}`} className="btn btn-outline-dark">Add to Cart</Link>
-                                    </div>
+                        <div className='col-md-3 mb-4' key={product.id}>
+                            <div className="card h-100 text-center p-4">
+                                <img src={product.images} className="card-img-top" alt={product.name}
+                                    height="250px" />
+                                <div className="card-body">
+                                    <h5 className="card-title mb-0">{product.name}</h5>
+                                    <p className="card-text lead fw-bold ">${product.metadata.price}</p>
+                                    <Link to={`/products/${product.id}`} className="btn btn-outline-dark">Add to Cart</Link>
                                 </div>
                             </div>
-                        </>
+                        </div>
                     )
                 })}
             </>
@@ -92,6 +102,7 @@ export default function Products() {
                 </div>
                 <div className='row justify-content-center'>
                     {loading ? <Loading /> : <ShowProducts />}
+                    <button className='btn btn-outline-dark mt-5 col-md-2' onClick={handleMoreProducts}>Load More</button>
                 </div>
             </div>
         </div>
