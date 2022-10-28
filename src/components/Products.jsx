@@ -102,6 +102,7 @@ export default function Products() {
                 </div>
                 <div className='row justify-content-center'>
                     {loading ? <Loading /> : <ShowProducts />}
+                    <div></div>
                     <button className='btn btn-outline-dark mt-5 col-md-2' onClick={handleMoreProducts}>Load More</button>
                 </div>
             </div>

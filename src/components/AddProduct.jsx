@@ -8,6 +8,7 @@ export default function AddProduct() {
     const [images, setImages] = useState("");
     const [humanPrice, setHumanPrice] = useState("");
     const [price, setPrice] = useState("");
+    const [inventory, setInventory] = useState("");
 
 
     const handleSubmit = async (e) => {
@@ -20,6 +21,7 @@ export default function AddProduct() {
                     name: name,
                     description: description,
                     unit_amount: price,
+                    inventory: inventory,
                     images: images
                 }),
             });
@@ -29,6 +31,7 @@ export default function AddProduct() {
                 setDescription("");
                 setImages("");
                 setPrice("");
+                setInventory("");
                 setMessage("Product created successfully");
                 alert('Your Product has been created')
             } else {
@@ -57,11 +60,16 @@ export default function AddProduct() {
                                 onChange={(e) => setName(e.target.value)}
                             />
                             <label className='form-label lead mt-3'>Description</label>
-                            <input type="text" className='form-control'
+                            <textarea type="text" className='form-control'
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
-                            <label className='form-label lead mt-3'>Price</label>
+                            <label className='form-label lead mt-3'>Inventory</label>
+                            <input type="number" className='form-control'
+                                value={inventory}
+                                onChange={(e) => setInventory(e.target.valueAsNumber)}
+                            />
+                            <label className='form-label lead mt-3'>Unit Price</label>
                             <input type="text" className='form-control' placeholder='Required'
                                 value={humanPrice}
                                 onFocus={(e) =>
