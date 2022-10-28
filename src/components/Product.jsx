@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../redux/action';
+import React, {useState, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {addToCart} from '../redux/action';
 import Skeleton from 'react-loading-skeleton';
-import { Link, useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 export default function Product() {
-    const { id } = useParams();
+    const {id} = useParams();
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -25,41 +25,42 @@ export default function Product() {
         getProduct();
     }, []);
 
+
     const Loading = () => {
         return (
-            <>
-                <div className="col-md-6">
-                    <Skeleton height={400}></Skeleton>
+            <div className="d-flex justify-content-center">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                 </div>
-            </>
-        )
-    }
+            </div>
+        );
+    };
 
     const ShowProduct = () => {
         return (
             <>
                 <div className='col-md-4'>
-                    <img src={product.images} alt={product.name} height="400px" width="400px" />
+                    <img src={product.images} alt={product.name} height="400px" width="400px"/>
                 </div>
-                <div className='col-md-6'>
+                <div className='col-md-7'>
                     <h1 className='display-5'>
                         {product.name}
                     </h1>
+                    <p className='lead'>Available units: {product.inventory}</p>
                     <h3 className='display-6 fw-bold my-4'>
                         $ {product.price}
                     </h3>
                     <p className='lead'>{product.description}</p>
-                    <button className='btn btn-outline-dark px-4 py-2'
-
-                        onClick={() => addProduct(product)}>
-                        Add to Cart
-                    </button>
-                    <Link to="/cart" className='btn btn-outline-dark ms-2 px-3 py-2'>
-                        Go to Cart
-                    </Link>
-                    <a href={product.payment_link} target="_blank" rel="noreferrer" className='btn btn-outline-dark px-3 py-2 ms-2'>
-                        Buy Now!
-                    </a>
+                    <div className="btn-group mt-3" role="group" aria-label="Basic example">
+                        <button className='btn btn-outline-dark px-4 py-2'
+                                onClick={() => addProduct(product)}>
+                            Add to Cart
+                        </button>
+                        <a href={product.payment_link} target="_blank" rel="noreferrer"
+                           className='btn btn-outline-dark px-3 py-2 ms-2'>
+                            Buy Now!
+                        </a>
+                    </div>
                 </div>
             </>
         )
@@ -68,7 +69,7 @@ export default function Product() {
         <div>
             <div className='container py-5'>
                 <div className="row py-4">
-                    {loading ? <Loading /> : <ShowProduct />}
+                    {loading ? <Loading/> : <ShowProduct/>}
                 </div>
             </div>
         </div>
